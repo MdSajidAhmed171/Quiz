@@ -5,14 +5,22 @@ export const data = [
         Option2: "New Jersy",
         Option3: "Florida",
         Option4: "Washington DC",
-        ans: 1,
+        ans: 4,
     },
     {
         question: "Famous for Aligator?",
-        Option1: "New York",
+        Option1: "Arizona",
         Option2: "New Jersy",
         Option3: "Florida",
-        Option4: "Washington DC",
+        Option4: "Calfornia",
+        ans: 3,
+    },
+    {
+        question: "Famous for Holywood?",
+        Option1: "Ohio",
+        Option2: "New Jersy",
+        Option3: "Connecticut",
+        Option4: "Calfornia",
         ans: 3,
     }
 ]

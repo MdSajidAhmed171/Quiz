@@ -40,9 +40,11 @@
     margin: auto;
     font-size: 18px;
 }
-.correct{
+.container .correct{
     background: green;
+    border-color: lightgreen;
 }
-.wrong{
+.container .wrong{
     background: red;
+    border-color: orange;
 }

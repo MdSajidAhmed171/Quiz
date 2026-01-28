@@ -4,57 +4,59 @@ import { data } from '../../assets/data';
 
 export const Quiz = () => {
 
-    let [index,setIndex] = useState(0); 
-    let [question,setQuestion] = useState(data[index]); 
-    let [lock, setLock] = useState(false);
-    let [score, setScore] = useState(0);
-    let option1 = useRef(null);
-    let option2 = useRef(null);
-    let option3 = useRef(null);
-    let option4 = useRef(null);
-    let option_array = [option1, option2, option3, option4];
-    let [result, setResult] = useState(false);
+    const [index,setIndex] = useState(0); 
+    const [lock, setLock] = useState(false);
+    const [score, setScore] = useState(0);
+    const [result, setResult] = useState(false);
+    const question= data[index]; 
+    
+    const option1 = useRef(null);
+    const option2 = useRef(null);
+    const option3 = useRef(null);
+    const option4 = useRef(null);
+    const option_array = [option1, option2, option3, option4];
+    
 
     const checkAns = (e, ans) => {
-        if(lock == false){
+        if(lock === false){
             if(question.ans ===ans){
                 e.target.classList.add("correct");
-                setLock(true)
                 setScore(prev=>prev+1)
             }else{
                 e.target.classList.add("wrong");
-                setLock(true)
                 option_array[question.ans-1].current.classList.add("correct");
             }
+            setLock(true)
         }
     }
     const next = () =>{
         if(lock === true){
-            if(data.length-1 == index){
+            if(index === data.length-1){
                 setResult(true);
                 return 0;
             }
-            setIndex(++index);
-            setQuestion(data[index]);
+            setIndex(prev=>prev+1);
             setLock(false);
-            option_array.map((option)=>{
-                option.current.classList.remove("wrong");
-                option.current.classList.remove("correct");
+            option_array.forEach((option)=>{
+                option.current.classList.remove("wrong", "correct");
             })
         }
     }
     const reset = () =>{
         setIndex(0);
-        setQuestion(data[index-1]);
         setResult(false);
         setScore(0);
         setLock(false);
+        option_array.forEach(option => {
+            option.current.classList.remove("wrong", "correct");
+        });
     }
   return (
     <div className='container'>
         <h1>Quiz APP</h1>
         <hr />
-        {result?<></>:<>
+        {!result?(
+        <>
             <h2>{index+1}. {question.question}</h2>
             <ul>
                 <li ref={option1} onClick={(e)=>{checkAns(e,1)}}>{question.Option1}</li>
@@ -64,12 +66,13 @@ export const Quiz = () => {
             </ul>
             <button onClick={next}>Next</button>
             <div className='index'>{index+1} of {data.length} container</div>
-        </>}
-        {result?<>
+        </>
+        ):(
+        <>
             <h2>You Scored {score} out of {data.length}</h2>
-            <button onClick={reset}>Reset</button>
-        </>: <></>}
-        
+            <button onClick={reset}>Reset</button> 
+        </>
+    )}
     </div>
   )
 }
